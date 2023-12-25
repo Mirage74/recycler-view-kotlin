@@ -14,6 +14,7 @@ import com.example.apl_rv.domain.ShopItem
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = ShopListRepositoryImpl
+    private val forTest = 68
 
     private val getShopListUseCase = GetShopListUseCase(repository)
     private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)

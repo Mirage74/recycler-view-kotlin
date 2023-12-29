@@ -15,19 +15,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private val TAG = "MainActivity"
+    private var item = ShopItem("444", 3, true, 111)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this, MainViewModelFactory(application))[MainViewModel::class.java]
-        Log.d(TAG, ShopListRepositoryImpl.toString())
-        val item = ShopItem("test Replace", 111, true, -3)
-        //ShopListRepositoryImpl.editShopItem(item)
-        ShopListRepositoryImpl.addShopItem(item)
-        Log.d(TAG, ShopListRepositoryImpl.toString())
+        viewModel.shopList.observe(this) {
+            Log.d(TAG, it.toString())
+                //viewModel.deleteShopItem(it[0])
+
+        }
+
+        //val shopItem = viewModel.shopList.value?.get(0)
+        viewModel.getShopList()
+       //viewModel.deleteShopItem(item)
 
 
+        //Log.d(TAG, viewModel.shopList.value.toString())
     }
-
 
 }

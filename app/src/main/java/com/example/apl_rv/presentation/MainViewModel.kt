@@ -21,22 +21,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
 
-    val shopList = MutableLiveData<List<ShopItem>>()
+    //val shopList = MutableLiveData<List<ShopItem>>()
+    val shopList = getShopListUseCase.getShopList()
 
-    fun getShopList() {
-        val list = getShopListUseCase.getShopList()
-        shopList.value = list
-    }
+//    fun getShopList() {
+//        val list = getShopListUseCase.getShopList()
+//        shopList.value = list
+//    }
 
     fun deleteShopItem(item: ShopItem) {
         deleteShopItemUseCase.deleteShopItem(item)
-        getShopList()
+        //getShopList()
     }
 
     fun changeEnabledState(item: ShopItem) {
-        deleteShopItemUseCase.deleteShopItem(item)
         val newItem = item.copy(enabled = !item.enabled)
         editShopItemUseCase.editShopItem(newItem)
-        getShopList()
+        //getShopList()
     }
 }

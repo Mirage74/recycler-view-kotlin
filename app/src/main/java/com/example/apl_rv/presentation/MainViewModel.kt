@@ -32,7 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         //getShopList()
     }
 
-    fun changeEnabledState(item: ShopItem) {
+    fun changeEnableState(item: ShopItem) {
         val newItem = item.copy(enabled = !item.enabled)
         editShopItemUseCase.editShopItem(newItem)
         //getShopList()

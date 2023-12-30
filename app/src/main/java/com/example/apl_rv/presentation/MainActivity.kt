@@ -10,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.apl_rv.R
 import com.example.apl_rv.databinding.ActivityMainBinding
-import com.example.apl_rv.databinding.ItemShopEnabledBinding
-import com.example.apl_rv.databinding.ItemShopDisabledBinding
 import com.example.apl_rv.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
@@ -34,26 +32,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showList(list: List<ShopItem>) {
-        val bindingEnableView = DataBindingUtil.setContentView<ItemShopEnabledBinding>(this, R.layout.item_shop_enabled)
-        val bindingDisableView = DataBindingUtil.setContentView<ItemShopDisabledBinding>(this, R.layout.item_shop_disabled)
-        var tvName: TextView
-        var tvCount: TextView
+        llShopList.removeAllViews()
         for (shopItem in list) {
             val layoutID = if (shopItem.enabled) {
-//                tvName = bindingEnableView.tvName
-//                tvCount = bindingEnableView.tvCount
-                R.layout.item_shop_enabled
+                 R.layout.item_shop_enabled
             } else {
-//                tvName = bindingDisableView.tvName
-//                tvCount = bindingDisableView.tvCount
-                R.layout.item_shop_disabled
+                 R.layout.item_shop_disabled
             }
             val view = LayoutInflater.from(this).inflate(layoutID, llShopList, false)
-//            tvName.text = shopItem.name
-//            tvCount.text = shopItem.count.toString()
+            val tvName = view.findViewById<TextView>(R.id.tv_name)
+            val tvCount = view.findViewById<TextView>(R.id.tv_count)
+            tvName.text = shopItem.name
+            tvCount.text = shopItem.count.toString()
+            view.setOnLongClickListener {
+                viewModel.changeEnableState(shopItem)
+                true
+            }
             llShopList.addView(view)
         }
     }
-
-
 }

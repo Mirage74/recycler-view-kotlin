@@ -1,7 +1,4 @@
-package com.example.apl_rv.shoplist
-
-import com.example.apl_rv.domain.ShopItem
-import com.example.apl_rv.domain.ShopListRepository
+package com.example.apl_rv.domain
 
 class GetShopItemUseCase(private val shopListRepository: ShopListRepository) {
 

@@ -99,4 +99,5 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
         private fun finishWork() {
             _shouldCloseScreen.value = Unit
         }
+
     }

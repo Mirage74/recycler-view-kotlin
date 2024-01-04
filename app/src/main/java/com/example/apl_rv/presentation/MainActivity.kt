@@ -1,6 +1,7 @@
 package com.example.apl_rv.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
-    //private val TAG = "MainActivity"
+    private val TAG = "MainActivity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel =
-            ViewModelProvider(this, MainViewModelFactory(application))[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, MainViewModelFactory(application))[MainViewModel::class.java]
         setupRecyclerView()
 
 
@@ -37,9 +37,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setupRecyclerView() {
-        shopListAdapter = ShopListAdapter()
-        with(binding.rvShopList) {
+    private fun setupRecyclerView() {
+        val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
+        with(rvShopList) {
+            shopListAdapter = ShopListAdapter()
             adapter = shopListAdapter
             recycledViewPool.setMaxRecycledViews(
                 ShopListAdapter.VIEW_TYPE_ENABLED,
@@ -51,10 +52,8 @@ class MainActivity : AppCompatActivity() {
             )
         }
         setupLongClickListener()
-
         setupClickListener()
-
-        setupSwipeListener(binding.rvShopList)
+        setupSwipeListener(rvShopList)
     }
 
     private fun setupSwipeListener(rvShopList: RecyclerView) {
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            //Log.d(TAG, "shopListAdapter.onShopItemLongClickListener, ShopItem : ${it.toString()}")
+            Log.d(TAG, it.toString())
             val intent = ShopItemActivity.newIntentEditItem(this, it.id)
             startActivity(intent)
         }
@@ -94,5 +93,4 @@ class MainActivity : AppCompatActivity() {
             viewModel.changeEnableState(it)
         }
     }
-
 }

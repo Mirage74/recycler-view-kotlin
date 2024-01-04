@@ -1,6 +1,5 @@
 package com.example.apl_rv.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.apl_rv.domain.ShopItem
@@ -12,7 +11,7 @@ object ShopListRepositoryImpl : ShopListRepository {
     private val shopListLD = MutableLiveData<List<ShopItem>>()
     private val shopList = sortedSetOf<ShopItem>({ o1, o2 -> o1.id.compareTo(o2.id) })
 //    private val shopList = mutableListOf<ShopItem>()
-    private val TAG = "ShopListRepositoryImpl"
+    //private val TAG = "ShopListRepositoryImpl"
     private var autoIncrementId = 0
 
     init {
@@ -20,8 +19,9 @@ object ShopListRepositoryImpl : ShopListRepository {
     }
 
     fun initShopItems() {
-        for (i in 0 until 200) {
-            val item = ShopItem("Name $i", i, Random.nextBoolean(), i)
+        for (i in 0 until 12) {
+            //val item = ShopItem("Name $i", i, Random.nextBoolean(), i)
+            val item = ShopItem("Name $i", i, Random.nextBoolean())
             addShopItem(item)
         }
     }

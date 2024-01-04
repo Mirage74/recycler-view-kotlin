@@ -1,7 +1,6 @@
 package com.example.apl_rv.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -15,10 +14,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
-    private val TAG = "MainActivity"
+    //private val TAG = "MainActivity"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel =
             ViewModelProvider(this, MainViewModelFactory(application))[MainViewModel::class.java]
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.shopList.observe(this) {
             //shopListAdapter.shopList = it
             shopListAdapter.submitList(it)
+        }
+        binding.buttonAddShopItem.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
         }
     }
 
@@ -77,7 +83,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Log.d(TAG, "shopListAdapter.onShopItemLongClickListener, ShopItem : ${it.toString()}")
+            //Log.d(TAG, "shopListAdapter.onShopItemLongClickListener, ShopItem : ${it.toString()}")
+            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+            startActivity(intent)
         }
     }
 

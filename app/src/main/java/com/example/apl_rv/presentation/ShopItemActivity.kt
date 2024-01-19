@@ -3,12 +3,11 @@ package com.example.apl_rv.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.apl_rv.R
 import com.example.apl_rv.domain.ShopItem
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
@@ -17,13 +16,15 @@ class ShopItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
         parseIntent()
-        Log.d("ShopItemFragment", "savedInstanceState act: $savedInstanceState")
         if (savedInstanceState == null) {
             launchRightMode()
         }
 
     }
 
+    override fun onEditingFinished() {
+        finish()
+    }
 
     private fun launchRightMode() {
         val fragment = when (screenMode) {

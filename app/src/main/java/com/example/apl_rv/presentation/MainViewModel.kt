@@ -2,8 +2,6 @@ package com.example.apl_rv.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-
-
 import com.example.apl_rv.data.ShopListRepositoryImpl
 import com.example.apl_rv.domain.DeleteShopItemUseCase
 import com.example.apl_rv.domain.EditShopItemUseCase

@@ -12,7 +12,7 @@ import com.example.apl_rv.domain.ShopItem
 
 
 class ShopItemViewModel(application: Application) : AndroidViewModel(application) {
-        private val repository = ShopListRepositoryImpl
+        private val repository = ShopListRepositoryImpl(application)
 
         private val getShopItemUseCase = GetShopItemUseCase(repository)
         private val addShopItemUseCase = AddShopItemUseCase(repository)

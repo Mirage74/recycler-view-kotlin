@@ -13,7 +13,7 @@ abstract class AppDatabase: RoomDatabase() {
     companion object {
 
         private var INSTANCE: AppDatabase? = null
-        private val LOCK = true
+        private val LOCK = Any()
         private const val DB_NAME = "shop_item.db"
 
         fun getInstance(application: Application): AppDatabase {
@@ -28,7 +28,9 @@ abstract class AppDatabase: RoomDatabase() {
                     application,
                     AppDatabase::class.java,
                     DB_NAME
-                ).build()
+                )
+                    .allowMainThreadQueries()
+                    .build()
                 INSTANCE = db
                 return db
             }

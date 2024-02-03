@@ -4,14 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.apl_rv.data.ShopListRepositoryImpl
 import com.example.apl_rv.domain.AddShopItemUseCase
 import com.example.apl_rv.domain.EditShopItemUseCase
 import com.example.apl_rv.domain.GetShopItemUseCase
 import com.example.apl_rv.domain.ShopItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 
@@ -22,7 +20,6 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
     private val addShopItemUseCase = AddShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
 
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val _errorInputName = MutableLiveData<Boolean>()
     val errorInputName: LiveData<Boolean>
@@ -41,7 +38,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
         get() = _shouldCloseScreen
 
     fun getShopItem(shopItemId: Int) {
-        scope.launch {
+        viewModelScope.launch {
             val item = getShopItemUseCase.getShopItem(shopItemId)
             _shopItem.value = item
         }
@@ -49,7 +46,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun addShopItem(inputName: String?, inputCount: String?) {
-        scope.launch {
+        viewModelScope.launch {
             val name = parseName(inputName)
             val count = parseCount(inputCount)
             val fieldsValid = validateInput(name, count)
@@ -64,7 +61,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
 
 
     fun editShopItem(inputName: String?, inputCount: String?) {
-        scope.launch {
+        viewModelScope.launch {
             val name = parseName(inputName)
             val count = parseCount(inputCount)
             val fieldsValid = validateInput(name, count)
@@ -114,10 +111,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
 
     private fun finishWork() {
         _shouldCloseScreen.value = Unit
+        //_shouldCloseScreen.postValue(Unit)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        scope.cancel()
-    }
 }
